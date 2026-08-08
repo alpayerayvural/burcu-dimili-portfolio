@@ -82,24 +82,25 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
             );
           })}
 
-          {/* Language Switcher */}
+          {/* Language Switcher (Masaüstü) */}
           <button
             onClick={() => setLang(lang === "TR" ? "EN" : "TR")}
             className="flex items-center space-x-1.5 px-3 py-1 border border-neutral-400 rounded-full hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-all text-[11px] font-semibold tracking-wider ml-4 cursor-pointer"
           >
             <Globe className="w-3.5 h-3.5" />
-            <span>{lang}</span>
+            <span>{lang === "TR" ? "EN" : "TR"}</span>
           </button>
         </nav>
 
         {/* Mobile Navigation Button */}
         <div className="flex items-center space-x-4 lg:hidden">
+          {/* Language Switcher (Mobil) */}
           <button
             onClick={() => setLang(lang === "TR" ? "EN" : "TR")}
             className="flex items-center space-x-1 px-2.5 py-1 border border-neutral-400 rounded-full text-[10px] font-semibold tracking-wider"
           >
             <Globe className="w-3 h-3" />
-            <span>{lang}</span>
+            <span>{lang === "TR" ? "EN" : "TR"}</span>
           </button>
 
           <button
