@@ -20,6 +20,11 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
     if (setActiveTab) {
       e.preventDefault();
       setActiveTab(id);
+      
+      // Adres çubuğundaki URL'yi sayfa yenilenmeden günceller (paylaşılabilir link)
+      const newUrl = id === "home" ? "/" : `/?tab=${id}`;
+      window.history.pushState(null, "", newUrl);
+      
       setIsOpen(false);
     }
   };
@@ -30,7 +35,12 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
         {/* Brand / Logo */}
         <Link 
           href="/" 
-          onClick={() => setActiveTab && setActiveTab("home")}
+          onClick={() => {
+            if (setActiveTab) {
+              setActiveTab("home");
+              window.history.pushState(null, "", "/");
+            }
+          }}
           className="group"
         >
           <h1 className="font-serif text-2xl md:text-3xl tracking-wider text-[#1A1A1A] group-hover:opacity-75 transition-opacity">
@@ -46,43 +56,29 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
           {content.nav.map((item) => {
             const isPageLink = item.id === "about" || item.id === "contact";
             const isActive = activeTab === item.id;
+            const targetHref = isPageLink
+              ? `/${item.id}`
+              : item.id === "home"
+              ? "/"
+              : `/?tab=${item.id}`;
 
-            if (isPageLink) {
-              return (
-                <Link
-                  key={item.id}
-                  href={`/${item.id}`}
-                  className="hover:text-black transition-colors relative py-1 uppercase tracking-widest after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-black hover:after:w-full after:transition-all"
-                >
-                  {item.label}
-                </Link>
-              );
-            }
-
-            return setActiveTab ? (
-              <button
+            return (
+              <Link
                 key={item.id}
-                onClick={(e) => handleTabClick(item.id, e)}
-                className={`transition-colors relative py-1 cursor-pointer uppercase tracking-widest ${
+                href={targetHref}
+                onClick={(e) => !isPageLink && handleTabClick(item.id, e)}
+                className={`transition-colors relative py-1 uppercase tracking-widest ${
                   isActive
                     ? "text-black font-semibold after:w-full"
                     : "hover:text-black after:w-0 hover:after:w-full"
                 } after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:bg-black after:transition-all`}
               >
                 {item.label}
-              </button>
-            ) : (
-              <Link
-                key={item.id}
-                href={`/?tab=${item.id}`}
-                className="hover:text-black transition-colors relative py-1 uppercase tracking-widest after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-black hover:after:w-full after:transition-all"
-              >
-                {item.label}
               </Link>
             );
           })}
 
-          {/* Language Switcher (Masaüstü) */}
+          {/* Language Switcher (Masaüstü - Akıllı EN/TR Gösterimi) */}
           <button
             onClick={() => setLang(lang === "TR" ? "EN" : "TR")}
             className="flex items-center space-x-1.5 px-3 py-1 border border-neutral-400 rounded-full hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-all text-[11px] font-semibold tracking-wider ml-4 cursor-pointer"
@@ -94,7 +90,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
 
         {/* Mobile Navigation Button */}
         <div className="flex items-center space-x-4 lg:hidden">
-          {/* Language Switcher (Mobil) */}
+          {/* Language Switcher (Mobil - Akıllı EN/TR Gösterimi) */}
           <button
             onClick={() => setLang(lang === "TR" ? "EN" : "TR")}
             className="flex items-center space-x-1 px-2.5 py-1 border border-neutral-400 rounded-full text-[10px] font-semibold tracking-wider"
@@ -118,33 +114,20 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
         <nav className="lg:hidden bg-[#F4F3EF] border-b border-neutral-300 px-6 py-6 flex flex-col space-y-4 text-xs tracking-widest uppercase font-medium border-t border-neutral-200">
           {content.nav.map((item) => {
             const isPageLink = item.id === "about" || item.id === "contact";
+            const targetHref = isPageLink
+              ? `/${item.id}`
+              : item.id === "home"
+              ? "/"
+              : `/?tab=${item.id}`;
 
-            if (isPageLink) {
-              return (
-                <Link
-                  key={item.id}
-                  href={`/${item.id}`}
-                  onClick={() => setIsOpen(false)}
-                  className="hover:text-black transition-colors py-1 text-neutral-800 uppercase tracking-widest"
-                >
-                  {item.label}
-                </Link>
-              );
-            }
-
-            return setActiveTab ? (
-              <button
-                key={item.id}
-                onClick={(e) => handleTabClick(item.id, e)}
-                className="text-left hover:text-black transition-colors py-1 text-neutral-800 cursor-pointer uppercase tracking-widest"
-              >
-                {item.label}
-              </button>
-            ) : (
+            return (
               <Link
                 key={item.id}
-                href={`/?tab=${item.id}`}
-                onClick={() => setIsOpen(false)}
+                href={targetHref}
+                onClick={(e) => {
+                  if (!isPageLink) handleTabClick(item.id, e);
+                  setIsOpen(false);
+                }}
                 className="hover:text-black transition-colors py-1 text-neutral-800 uppercase tracking-widest"
               >
                 {item.label}
