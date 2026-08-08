@@ -54,7 +54,8 @@ export default function ApproachPage() {
                       </h3>
                     </div>
                     <div className="md:col-span-7">
-                      <p className="text-xs md:text-sm text-neutral-600 font-normal leading-relaxed">
+                      {/* text-justify ile sağ/sol eşitlendi */}
+                      <p className="text-xs md:text-sm text-neutral-600 font-normal leading-relaxed text-justify">
                         {item.desc}
                       </p>
                     </div>

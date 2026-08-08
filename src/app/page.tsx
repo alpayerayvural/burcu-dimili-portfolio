@@ -28,7 +28,6 @@ function MainContent() {
     }
   }, [searchParams]);
 
-  // Tıklanan görseli 20'li büyük sergi listesindeki (allSliderImages) doğru indeksiyle eşleştirip modalı açar
   const handleOpenModal = (clickedIndexInTab: number) => {
     const currentTabImages =
       pageSliders[activeTab as keyof typeof pageSliders] || pageSliders.home;
@@ -96,7 +95,8 @@ function MainContent() {
                               </h3>
                             </div>
                             <div className="md:col-span-7">
-                              <p className="text-xs md:text-sm text-neutral-600 font-normal leading-relaxed">
+                              {/* text-justify ile sağ/sol eşitlendi */}
+                              <p className="text-xs md:text-sm text-neutral-600 font-normal leading-relaxed text-justify">
                                 {item.desc}
                               </p>
                             </div>
@@ -247,7 +247,7 @@ function MainContent() {
         <Footer />
       </footer>
 
-      {/* HD Galeri Modal (Tüm 20 Fotoğrafın Sırayla Aktığı Sergi Modu) */}
+      {/* HD Galeri Modal */}
       <GalleryModal
         isOpen={isModalOpen}
         images={allSliderImages}
