@@ -13,7 +13,7 @@ import { siteContent } from "@/data/content";
 import { useLanguage } from "@/context/LanguageContext";
 
 function MainContent() {
-  const { lang } = useLanguage();
+  const { lang, setLang } = useLanguage();
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState("home");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,12 +21,18 @@ function MainContent() {
 
   const content = siteContent[lang];
 
+  // URL'den hem Sekmeyi (tab) hem Dili (lang) okur
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam) {
       setActiveTab(tabParam);
     }
-  }, [searchParams]);
+
+    const langParam = searchParams.get("lang")?.toUpperCase();
+    if (langParam === "EN" || langParam === "TR") {
+      setLang(langParam as "EN" | "TR");
+    }
+  }, [searchParams, setLang]);
 
   const handleOpenModal = (clickedIndexInTab: number) => {
     const currentTabImages =
@@ -63,10 +69,10 @@ function MainContent() {
                   {activeTab === "home" && (
                     <div className="space-y-8 pt-4">
                       <div className="w-12 h-[1px] bg-neutral-800"></div>
-                      <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.15]">
+                      <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.15] text-justify">
                         {content.hero.title}
                       </h2>
-                      <p className="text-sm md:text-base text-neutral-600 max-w-xl font-normal leading-relaxed">
+                      <p className="text-sm md:text-base text-neutral-600 max-w-xl font-normal leading-relaxed text-justify">
                         {content.hero.description}
                       </p>
                     </div>
@@ -95,7 +101,6 @@ function MainContent() {
                               </h3>
                             </div>
                             <div className="md:col-span-7">
-                              {/* text-justify ile sağ/sol eşitlendi */}
                               <p className="text-xs md:text-sm text-neutral-600 font-normal leading-relaxed text-justify">
                                 {item.desc}
                               </p>
