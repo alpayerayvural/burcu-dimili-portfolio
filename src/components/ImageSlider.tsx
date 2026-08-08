@@ -1,77 +1,82 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-export const heroImages = [
-  { url: "/images/hero/Autoban, Akbank.jpg", title: "AUTOBAN", subtitle: "Akbank" },
-  { url: "/images/hero/Barbare Studio, Yer Duygusu.jpg", title: "BARBARE STUDIO", subtitle: "Yer Duygusu" },
-  { url: "/images/hero/Bihter Yasemin Adalı, Haz ile Göklenir Dünya.jpg", title: "BİHTER YASEMİN ADALI", subtitle: "Haz ile Göklenir Dünya" },
-  { url: "/images/hero/Bor Sanat, Zihnin Sınırlarında Bir Rota Fikret Muallâ.png", title: "BOR SANAT", subtitle: "Zihnin Sınırlarında Bir Rota Fikret Muallâ" },
-  { url: "/images/hero/Hara, Canavarların Vaatleri.jpg", title: "HARA", subtitle: "Canavarların Vaatleri" },
-  { url: "/images/hero/İMALAT-HANE, Antonio Cosentino.jpg", title: "İMALAT-HANE", subtitle: "Antonio Cosentino" },
-  { url: "/images/hero/Melek Zeynep Bulut, Duo.jpg", title: "MELEK ZEYNEP BULUT", subtitle: "Duo" },
-  { url: "/images/hero/Melek Zeynep Bulut, OpenMonuments.JPG", title: "MELEK ZEYNEP BULUT", subtitle: "OpenMonuments" },
-  { url: "/images/hero/Pavilion of the Moment, Waugh Thistleton Architects+Photo_ Mark Cocksedge.JPG 9.JPG", title: "PAVILION OF THE MOMENT", subtitle: "Waugh Thistleton Architects" },
-  { url: "/images/hero/The Red Room, designed by NUN Architecture and People Places Ideas_Photo_ Mark Cocksedge (1).JPEG", title: "THE RED ROOM", subtitle: "NUN Architecture" },
-  { url: "/images/hero/Vuslat, Emanet.JPG", title: "VUSLAT", subtitle: "Emanet" },
-  { url: "/images/hero/Wall_Tribune_Gate_Ali Derya Dostoğlu & Uğur Özer_Photo_ Mark Cocksedge (1).JPEG", title: "WALL, TRIBUNE, GATE", subtitle: "Ali Derya Dostoğlu & Uğur Özer" },
-  { url: "/images/hero/YUNT, VarYok.jpg", title: "YUNT", subtitle: "VarYok" },
-  { url: "/images/hero/Vuslat, Emanet, Tophane-i Amire.jpg", title: "Vuslat", subtitle: "Emanet, Tophane-i Amire" },
-];
+import { pageSliders, PageSliderType } from "@/data/sliders";
 
 interface ImageSliderProps {
+  activeTab?: string;
   onImageClick?: (index: number) => void;
 }
 
-export default function ImageSlider({ onImageClick }: ImageSliderProps) {
+export default function ImageSlider({ activeTab = "home", onImageClick }: ImageSliderProps) {
+  // Aktif sekmenin geçerli bir slider kategorisi olup olmadığını kontrol et
+  const activePage = (activeTab in pageSliders ? activeTab : "home") as PageSliderType;
+  const images = pageSliders[activePage];
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Sekme (activeTab) değiştiğinde slider resmini baştan (0) başlat
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [activeTab]);
+
+  // 5 Saniyelik otomatik akış
   useEffect(() => {
     if (isPaused) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 6000);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
 
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, images.length]);
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1));
+  const handlePrev = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+  const handleNext = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const handleDragEnd = (_: any, info: PanInfo) => {
+    if (info.offset.x < -40) {
+      handleNext();
+    } else if (info.offset.x > 40) {
+      handlePrev();
+    }
   };
 
   return (
-    <div className="flex flex-col group sticky top-28">
-      {/* Boyut çok hafif aşağıya doğru genişletildi (aspect-[5/4]) */}
+    <div className="flex flex-col group sticky top-28 select-none">
       <div
         onClick={() => onImageClick && onImageClick(currentIndex)}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="relative aspect-[5/4] w-full bg-neutral-200 overflow-hidden shadow-sm cursor-pointer"
+        className="relative aspect-[4/3] sm:aspect-[5/4] w-full bg-neutral-200 overflow-hidden shadow-sm cursor-pointer"
       >
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false}>
           <motion.img
-            key={currentIndex}
-            src={heroImages[currentIndex].url}
-            alt={heroImages[currentIndex].title}
-            initial={{ opacity: 0, scale: 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
+            key={`${activePage}-${currentIndex}`}
+            src={images[currentIndex].url}
+            alt={images[currentIndex].title}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            className="w-full h-full object-cover"
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="absolute inset-0 w-full h-full object-cover touch-pan-y"
           />
         </AnimatePresence>
 
-        {/* Sol / Sağ Şeffaf Oklar */}
         <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
           <button
             onClick={handlePrev}
@@ -90,12 +95,11 @@ export default function ImageSlider({ onImageClick }: ImageSliderProps) {
         </div>
       </div>
 
-      {/* Künye */}
       <div className="mt-3 flex justify-between items-baseline text-[11px] tracking-wider uppercase text-neutral-500 font-light">
         <span className="text-neutral-500 font-light">
-          {heroImages[currentIndex].title}
+          {images[currentIndex].title}
         </span>
-        <span>{heroImages[currentIndex].subtitle}</span>
+        <span>{images[currentIndex].subtitle}</span>
       </div>
     </div>
   );

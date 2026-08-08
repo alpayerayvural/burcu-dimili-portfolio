@@ -11,9 +11,9 @@ export const siteContent = {
       { id: "contact", label: "İletişim" },
     ],
     hero: {
-      title: "Çağdaş sanat, kültür ve kurumlar için stratejik iletişim.",
+      title: "Deneyim, yaratıcılık ve güçlü ilişkilerle iletişimin dönüştürücü gücüne inanıyoruz.",
       description:
-        "Anlamlı anlatılar inşa eder, basın ve kitlelerle kalıcı ilişkiler geliştirir, sanatçılar ve kültür kurumları için uluslararası görünürlük yaratırız.",
+        "Kültür, sanat ve yaratıcı endüstriler odağında, stratejik iletişim ve PR’ı güçlü fikirlerle buluşturuyoruz.",
     },
     trustedBy: {
       title: "DEVAM EDEN İŞ BİRLİKLERİ",
@@ -68,12 +68,12 @@ export const siteContent = {
           desc: "Sanatçılar, kurumlar, markalar, medya ve kültür kuruluşları arasında ortak değer üreten iş birlikleri geliştiririz.",
         },
         {
-          title: "Kampanyalar & Lansmanlar",
+          title: "Lansmanlar",
           desc: "Sergilerden lansmanlara, özel projelerden kültür programlarına kadar farklı ölçeklerde iletişim stratejileri geliştiririz.",
         },
         {
-          title: "Uluslararası Görünürlük",
-          desc: "Yerel projelerin uluslararası medya, iş birlikleri ve kültürel ağlarla buluşmasını sağlayacak iletişim fırsatları oluştururuz.",
+          title: "Görünürlük",
+          desc: "Projelerin ulusal medya, iş birlikleri ve kültürel ağlarla buluşmasını sağlayacak iletişim fırsatları oluştururuz.",
         },
       ],
     },
@@ -281,9 +281,9 @@ export const siteContent = {
       { id: "contact", label: "Contact" },
     ],
     hero: {
-      title: "Strategic communications for contemporary art, culture and institutions.",
+      title: "We believe in the transformative power of communication, shaped by experience, creativity, and strong relationships.",
       description:
-        "We build meaningful narratives, foster lasting relationships with the press and audiences, and create international visibility for artists and cultural institutions.",
+        "Working across culture, art, and the creative industries, we bring strategic communications and PR together with powerful ideas.",
     },
     trustedBy: {
       title: "ONGOING COLLABORATIONS",
@@ -342,8 +342,8 @@ export const siteContent = {
           desc: "Developing communication strategies for exhibitions, launches, special projects and cultural programmes.",
         },
         {
-          title: "International Visibility",
-          desc: "Creating communication opportunities that connect local projects with international audiences through media, partnerships and cultural networks.",
+          title: "Visibility",
+          desc: "We create communication opportunities that connect projects with national media, strategic collaborations, and cultural networks.",
         },
       ],
     },

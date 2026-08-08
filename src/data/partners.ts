@@ -13,7 +13,7 @@ export interface PartnerItem {
     { id: "2", name: "Autoban", type: "image", logoUrl: "/images/logos/Autoban.jpeg" },
     { id: "t2", name: "GREENHOUSE ART DAYS", type: "text", style: "font-sans tracking-tight text-sm font-bold" },
     { id: "3", name: "Baksı Müzesi", type: "image", logoUrl: "/images/logos/Baksı Müzesi.jpg" },
-    { id: "t3", name: "VUSLAT DOĞAN SABANCI", type: "text", style: "font-serif italic text-base" },
+    { id: "t3", name: "VUSLAT", type: "text", style: "font-serif italic text-base" },
     { id: "4", name: "Bayetav", type: "image", logoUrl: "/images/logos/Bayetav.png" },
     { id: "t4", name: "DOĞAYA SANAT ÇALIŞTAYI", type: "text", style: "font-mono text-sm tracking-wider" },
     { id: "5", name: "Bir Adım Var Vakfı", type: "image", logoUrl: "/images/logos/Bir Adım Var Vakfı.jpg" },

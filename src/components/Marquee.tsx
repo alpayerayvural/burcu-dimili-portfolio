@@ -14,7 +14,7 @@ function MarqueeRow({ items, direction = "left", speed = 140 }: MarqueeRowProps)
   return (
     <div className="marquee-row flex overflow-hidden select-none w-full py-4 cursor-pointer">
       <div
-        className={`flex items-center space-x-14 sm:space-x-20 shrink-0 ${
+        className={`flex w-max items-center space-x-14 sm:space-x-20 shrink-0 ${
           direction === "left" ? "animate-marquee-left" : "animate-marquee-right"
         }`}
         style={{
@@ -26,12 +26,13 @@ function MarqueeRow({ items, direction = "left", speed = 140 }: MarqueeRowProps)
         {duplicatedItems.map((partner, index) => (
           <div
             key={`${partner.id}-${index}`}
-            className="flex items-center justify-center shrink-0 h-20 px-3 opacity-85 hover:opacity-100 transition-opacity duration-300"
+            className="flex items-center justify-center shrink-0 h-20 min-w-[120px] sm:min-w-[160px] px-3 opacity-85 hover:opacity-100 transition-opacity duration-300"
           >
             {partner.type === "image" ? (
               <img
                 src={partner.logoUrl}
                 alt={partner.name}
+                loading="eager"
                 /* Kocaman logolar: Yükseklik h-16/h-20, Genişlik 240px */
                 className="max-h-16 sm:max-h-20 max-w-[200px] sm:max-w-[220px] w-auto h-auto object-contain filter grayscale contrast-200 brightness-90 hover:grayscale-0 transition-all duration-500"
                 style={{

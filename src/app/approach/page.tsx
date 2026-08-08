@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ImageSlider, { heroImages } from "@/components/ImageSlider";
+import ImageSlider from "@/components/ImageSlider";
+import { pageSliders } from "@/data/sliders";
 import GalleryModal from "@/components/GalleryModal";
 import { siteContent } from "@/data/content";
 import { useLanguage } from "@/context/LanguageContext";
@@ -81,14 +82,14 @@ export default function ApproachPage() {
 
       <GalleryModal
         isOpen={isModalOpen}
-        images={heroImages}
+        images={pageSliders.approach}
         currentIndex={modalIndex}
         onClose={() => setIsModalOpen(false)}
         onPrev={() =>
-          setModalIndex((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1))
+          setModalIndex((prev) => (prev === 0 ? pageSliders.approach.length - 1 : prev - 1))
         }
         onNext={() =>
-          setModalIndex((prev) => (prev + 1) % heroImages.length)
+          setModalIndex((prev) => (prev + 1) % pageSliders.approach.length)
         }
       />
     </div>

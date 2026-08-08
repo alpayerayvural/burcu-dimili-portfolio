@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GalleryModal from "@/components/GalleryModal";
@@ -35,26 +35,35 @@ export default function ContactPage() {
   const [isPaused, setIsPaused] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // 5 Saniyelik hızlı otomatik akış
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % contactImages.length);
-    }, 6000);
+    }, 5000);
     return () => clearInterval(timer);
   }, [isPaused]);
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handlePrev = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setCurrentIndex((prev) => (prev === 0 ? contactImages.length - 1 : prev - 1));
   };
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleNext = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setCurrentIndex((prev) => (prev + 1) % contactImages.length);
   };
 
+  const handleDragEnd = (_: any, info: PanInfo) => {
+    if (info.offset.x < -40) {
+      handleNext();
+    } else if (info.offset.x > 40) {
+      handlePrev();
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#F4F3EF] flex flex-col justify-between">
+    <div className="min-h-screen bg-[#F4F3EF] flex flex-col justify-between select-none">
       <div>
         <Header />
 
@@ -71,7 +80,7 @@ export default function ContactPage() {
             transition={{ duration: 0.5 }}
             className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center"
           >
-            {/* SOL TARAF: Üstte Açıklama, Altta E-posta ve Canlı Linkler */}
+            {/* SOL TARAF: Üstte Açıklama, Altta Kibarlaştırılmış E-posta ve Canlı Linkler */}
             <div className="lg:col-span-5 space-y-10">
               <div className="space-y-6">
                 {/* 1. Üstte Şık Editoryal Cümle */}
@@ -81,10 +90,10 @@ export default function ContactPage() {
                     : "For strategic communication, PR & press relations, and editorial projects."}
                 </p>
 
-                {/* 2. Altta Dev E-posta */}
+                {/* 2. Altta Kibarlaştırılmış E-posta */}
                 <a
                   href="mailto:burcu@burcudimili.com"
-                  className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1A1A1A] hover:italic transition-all duration-300 block leading-tight pt-2"
+                  className="font-serif text-xl sm:text-2xl md:text-3xl text-[#1A1A1A] hover:italic transition-all duration-300 block leading-tight pt-2"
                 >
                   burcu@burcudimili.com
                 </a>
@@ -124,16 +133,20 @@ export default function ContactPage() {
                   onMouseLeave={() => setIsPaused(false)}
                   className="relative aspect-[3/2] w-full bg-neutral-200 overflow-hidden shadow-sm cursor-pointer"
                 >
-                  <AnimatePresence mode="wait">
+                  <AnimatePresence initial={false}>
                     <motion.img
                       key={currentIndex}
                       src={contactImages[currentIndex].url}
                       alt={contactImages[currentIndex].title}
-                      initial={{ opacity: 0, scale: 1.02 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.2}
+                      onDragEnd={handleDragEnd}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 1.2, ease: "easeInOut" }}
-                      className={`w-full h-full object-cover ${contactImages[currentIndex].position}`}
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
+                      className={`absolute inset-0 w-full h-full object-cover touch-pan-y ${contactImages[currentIndex].position}`}
                     />
                   </AnimatePresence>
 

@@ -48,13 +48,13 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* SAĞ TARAF: Tek Parça Akıcı İtalik Biyografi */}
+            {/* SAĞ TARAF: Hem Soldan Hem Sağdan Tam Hizalı (text-justify) İtalik Biyografi */}
             <div className="lg:col-span-8 space-y-6 lg:pt-12 text-base md:text-lg text-neutral-800 leading-relaxed font-normal">
-              <div className="font-serif italic border-l border-neutral-800 pl-6 py-1 space-y-4">
+              <div className="font-serif italic border-l border-neutral-800 pl-6 py-1 space-y-4 text-justify">
                 <p>{content.p1}</p>
                 <p>{content.p2}</p>
                 <p>{content.p3}</p>
-                <p>{content.p4}</p> {/* Tamamı aynı tırnaklı italik font oldu */}
+                <p>{content.p4}</p>
               </div>
             </div>
           </motion.div>

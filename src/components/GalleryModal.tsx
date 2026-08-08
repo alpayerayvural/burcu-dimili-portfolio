@@ -101,8 +101,9 @@ export default function GalleryModal({
                 initial={{ opacity: 0, scale: 1.01 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-                className="w-full h-full object-cover"
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                /* Mobilde tam kadraj gösterir (object-contain), masaüstünde doldurur */
+                className="w-full h-full object-contain md:object-cover"
               />
             </AnimatePresence>
 

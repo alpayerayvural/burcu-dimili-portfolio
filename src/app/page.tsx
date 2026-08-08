@@ -5,7 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ImageSlider, { heroImages } from "@/components/ImageSlider";
+import ImageSlider from "@/components/ImageSlider";
+import { pageSliders, allSliderImages } from "@/data/sliders";
 import GalleryModal from "@/components/GalleryModal";
 import TrustedBy from "@/components/TrustedBy";
 import { siteContent } from "@/data/content";
@@ -27,9 +28,17 @@ function MainContent() {
     }
   }, [searchParams]);
 
-  // Galeri açıldığında her zaman 0. index'ten (baştan) başlar
-  const handleOpenModal = () => {
-    setModalIndex(0);
+  // Tıklanan görseli 20'li büyük sergi listesindeki (allSliderImages) doğru indeksiyle eşleştirip modalı açar
+  const handleOpenModal = (clickedIndexInTab: number) => {
+    const currentTabImages =
+      pageSliders[activeTab as keyof typeof pageSliders] || pageSliders.home;
+    const clickedImage = currentTabImages[clickedIndexInTab];
+
+    const globalIndex = allSliderImages.findIndex(
+      (img) => img.url === clickedImage?.url
+    );
+
+    setModalIndex(globalIndex !== -1 ? globalIndex : 0);
     setIsModalOpen(true);
   };
 
@@ -220,7 +229,7 @@ function MainContent() {
 
             {/* SAĞ TARAF: Slider */}
             <div className="lg:col-span-5">
-              <ImageSlider onImageClick={handleOpenModal} />
+              <ImageSlider activeTab={activeTab} onImageClick={handleOpenModal} />
             </div>
 
           </div>
@@ -238,17 +247,19 @@ function MainContent() {
         <Footer />
       </footer>
 
-      {/* HD Galeri Modal */}
+      {/* HD Galeri Modal (Tüm 20 Fotoğrafın Sırayla Aktığı Sergi Modu) */}
       <GalleryModal
         isOpen={isModalOpen}
-        images={heroImages}
+        images={allSliderImages}
         currentIndex={modalIndex}
         onClose={() => setIsModalOpen(false)}
         onPrev={() =>
-          setModalIndex((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1))
+          setModalIndex((prev) =>
+            prev === 0 ? allSliderImages.length - 1 : prev - 1
+          )
         }
         onNext={() =>
-          setModalIndex((prev) => (prev + 1) % heroImages.length)
+          setModalIndex((prev) => (prev + 1) % allSliderImages.length)
         }
       />
     </div>
