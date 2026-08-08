@@ -134,7 +134,7 @@ function MainContent() {
                       </div>
 
                       <div className="space-y-6 pt-6 border-t border-neutral-300/70">
-                        <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A]">
+                        <h2 className="font-serif text-2xl md:text-3xl text-[#1A1A1A]">
                           {content.collaborations.selectedTitle}
                         </h2>
                         <div className="bg-[#E8E4DF]/60 p-6 border border-neutral-300/60">
