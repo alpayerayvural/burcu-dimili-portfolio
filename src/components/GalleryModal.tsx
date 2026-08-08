@@ -36,6 +36,24 @@ export default function GalleryModal({
     setMounted(true);
   }, []);
 
+  // Görsellerin Arka Planda Akıllıca İndirilmesi (Preload Mechanism)
+  useEffect(() => {
+    if (!isOpen || !images || images.length === 0) return;
+
+    const nextIndex = (currentIndex + 1) % images.length;
+    const prevIndex = (currentIndex - 1 + images.length) % images.length;
+
+    if (images[nextIndex]?.url) {
+      const imgNext = new Image();
+      imgNext.src = images[nextIndex].url;
+    }
+
+    if (images[prevIndex]?.url) {
+      const imgPrev = new Image();
+      imgPrev.src = images[prevIndex].url;
+    }
+  }, [currentIndex, isOpen, images]);
+
   // Arka plan scroll kilitleme
   useEffect(() => {
     if (isOpen) {
@@ -53,7 +71,7 @@ export default function GalleryModal({
     if (!isOpen || isPaused) return;
     const timer = setInterval(() => {
       onNext();
-    }, 7000);
+    }, 5000);
     return () => clearInterval(timer);
   }, [isOpen, isPaused, onNext]);
 
