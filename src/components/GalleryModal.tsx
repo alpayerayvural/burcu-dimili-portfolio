@@ -54,40 +54,15 @@ export default function GalleryModal({
     }
   }, [currentIndex, isOpen, images]);
 
-  // Arka Plan Scroll Kilitleme ve Gerçek Native Fullscreen API
+  // Arka Plan Scroll Kilitleme
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-
-      // Mobilde Gerçek Tam Ekran (Tarayıcı ve Telefon Bilgilerini Gizler)
-      const docEl = document.documentElement as any;
-      if (docEl.requestFullscreen) {
-        docEl.requestFullscreen().catch(() => {});
-      } else if (docEl.webkitRequestFullscreen) {
-        docEl.webkitRequestFullscreen().catch(() => {});
-      }
     } else {
       document.body.style.overflow = "unset";
-
-      // Tam Ekrardan Çıkış
-      const doc = document as any;
-      if (doc.fullscreenElement || doc.webkitFullscreenElement) {
-        if (doc.exitFullscreen) {
-          doc.exitFullscreen().catch(() => {});
-        } else if (doc.webkitExitFullscreen) {
-          doc.webkitExitFullscreen().catch(() => {});
-        }
-      }
     }
-
     return () => {
       document.body.style.overflow = "unset";
-      const doc = document as any;
-      if (doc.fullscreenElement || doc.webkitFullscreenElement) {
-        if (doc.exitFullscreen) {
-          doc.exitFullscreen().catch(() => {});
-        }
-      }
     };
   }, [isOpen]);
 
@@ -100,7 +75,7 @@ export default function GalleryModal({
     return () => clearInterval(timer);
   }, [isOpen, isPaused, currentIndex, onNext]);
 
-  // Klavye Kontrolleri
+  // Klavye Kontrolleri (ESC & Ok Tuşları)
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -124,7 +99,7 @@ export default function GalleryModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-black select-none flex flex-col justify-between items-center"
+          className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-black select-none"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -132,9 +107,9 @@ export default function GalleryModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
-            className="w-full h-full relative flex items-center justify-center p-2 sm:p-4 md:p-10 pb-16 landscape:pb-10"
+            className="w-full h-full relative flex items-center justify-center"
           >
-            {/* Fotoğraf (Yan modda yüksekliği dikey alana göre dinamik ayarlar) */}
+            {/* FOTOĞRAF: Masaüstünde (md:) w-full h-full md:object-cover ile eski sinematik haline döndü. Mobilde kadraj korumalı. */}
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentIndex}
@@ -144,12 +119,12 @@ export default function GalleryModal({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="max-w-full max-h-[calc(100dvh-80px)] landscape:max-h-[calc(100dvh-45px)] object-contain pointer-events-none"
+                className="w-full h-full max-h-[calc(100dvh-70px)] md:max-h-none object-contain md:object-cover pointer-events-none"
               />
             </AnimatePresence>
 
-            {/* MOBİL İÇİN GÖRÜNMEZ DOKUNMATİK SAĞ/SOL ALANLAR */}
-            <div className="absolute inset-0 z-30 flex lg:hidden pointer-events-auto">
+            {/* MOBİL İÇİN GÖRÜNMEZ DOKUNMATİK SAĞ/SOL ALANLAR (Tap Zones) */}
+            <div className="absolute inset-0 z-30 flex md:hidden pointer-events-auto">
               <div
                 onClick={(e) => {
                   e.stopPropagation();
@@ -171,19 +146,19 @@ export default function GalleryModal({
             {/* Kapat Butonu */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-10 md:right-10 z-50 p-2.5 sm:p-3 rounded-full bg-black/50 hover:bg-black/80 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="absolute top-6 right-6 md:top-10 md:right-10 z-50 p-3 rounded-full bg-black/40 hover:bg-black/70 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Close Modal"
             >
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              <X className="w-6 h-6" />
             </button>
 
-            {/* MASAÜSTÜ İÇİN YÜZEN OKLAR (Mobil & Yan Modda Gizli) */}
+            {/* MASAÜSTÜ İÇİN YÜZEN OKLAR (Mobilde Gizli) */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 onPrev();
               }}
-              className="hidden lg:flex absolute left-8 lg:left-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="hidden md:flex absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Previous Image"
             >
               <ChevronLeft className="w-7 h-7" />
@@ -194,14 +169,14 @@ export default function GalleryModal({
                 e.stopPropagation();
                 onNext();
               }}
-              className="hidden lg:flex absolute right-8 lg:right-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="hidden md:flex absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Next Image"
             >
               <ChevronRight className="w-7 h-7" />
             </button>
 
-            {/* Alt Künye (Yan modda en alta oturur ve uzun isimleri truncate eder) */}
-            <div className="absolute bottom-4 sm:bottom-6 md:bottom-10 landscape:bottom-2 left-4 right-4 sm:left-6 sm:right-6 md:left-12 md:right-12 z-40 flex justify-between items-baseline text-[10px] sm:text-xs md:text-sm tracking-widest uppercase font-light text-white/80 drop-shadow-md pointer-events-none">
+            {/* Alt Künye */}
+            <div className="absolute bottom-16 md:bottom-10 left-6 right-6 md:left-12 md:right-12 z-40 flex justify-between items-baseline text-xs md:text-sm tracking-widest uppercase font-light text-white/80 drop-shadow-md pointer-events-none">
               <span className="font-light tracking-wider truncate pr-2">
                 {currentImage.title}
               </span>

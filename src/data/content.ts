@@ -338,7 +338,7 @@ export const siteContent = {
           desc: "Creating meaningful collaborations between artists, institutions, brands, media and cultural organisations.",
         },
         {
-          title: "Campaigns & Launches",
+          title: "Launches",
           desc: "Developing communication strategies for exhibitions, launches, special projects and cultural programmes.",
         },
         {
