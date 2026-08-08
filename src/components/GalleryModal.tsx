@@ -31,7 +31,7 @@ export default function GalleryModal({
   const [isPaused, setIsPaused] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Client-side render kontrolü (Portal için şart)
+  // Client-side render kontrolü
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -66,14 +66,14 @@ export default function GalleryModal({
     };
   }, [isOpen]);
 
-  // 7 Saniyelik Otomatik Akış
+  // 5 Saniyelik Otomatik Akış (Manual geçişlerde currentIndex değişince sayaç baştan sıfırlanır)
   useEffect(() => {
     if (!isOpen || isPaused) return;
     const timer = setInterval(() => {
       onNext();
     }, 5000);
     return () => clearInterval(timer);
-  }, [isOpen, isPaused, onNext]);
+  }, [isOpen, isPaused, currentIndex, onNext]);
 
   // ESC ve Ok Tuşları Kontrolü
   useEffect(() => {
@@ -91,7 +91,6 @@ export default function GalleryModal({
 
   const currentImage = images[currentIndex];
 
-  // React Portal ile bileşeni doğrudan document.body'ye ışınlıyoruz
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -100,47 +99,67 @@ export default function GalleryModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] w-screen h-screen overflow-hidden bg-black select-none"
-          style={{ top: 0, left: 0, right: 0, bottom: 0 }}
+          /* 100dvh ile mobil adres çubuğu taşmaları tamamen engellendi */
+          className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-black select-none"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
-            className="w-full h-full relative"
+            transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
+            className="w-full h-full relative flex items-center justify-center p-4 md:p-12"
           >
+            {/* Fotoğraf (Kadraj kesilmesin diye her ekranda ve yatay modda object-contain) */}
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentIndex}
                 src={currentImage.url}
                 alt={currentImage.title}
-                initial={{ opacity: 0, scale: 1.01 }}
+                initial={{ opacity: 0, scale: 0.99 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                /* Mobilde tam kadraj gösterir (object-contain), masaüstünde doldurur */
-                className="w-full h-full object-contain md:object-cover"
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="max-w-full max-h-full object-contain pointer-events-none"
               />
             </AnimatePresence>
+
+            {/* MOBİL İÇİN GÖRÜNMEZ SAĞ/SOL DOKUNMATİK ALANLAR (Tap Zones) */}
+            <div className="absolute inset-0 z-30 flex md:hidden pointer-events-auto">
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onPrev();
+                }}
+                className="w-1/2 h-full cursor-pointer"
+                aria-label="Previous Image Area"
+              />
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNext();
+                }}
+                className="w-1/2 h-full cursor-pointer"
+                aria-label="Next Image Area"
+              />
+            </div>
 
             {/* Sağ Üst Kapat Butonu */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 md:top-10 md:right-10 z-50 p-3 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="absolute top-6 right-6 md:top-10 md:right-10 z-50 p-3 rounded-full bg-black/40 hover:bg-black/70 text-white/90 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Close Modal"
             >
               <X className="w-6 h-6" />
             </button>
 
-            {/* Sol / Sağ Yüzen Oklar */}
+            {/* MASAÜSTÜ İÇİN YÜZEN OKLAR (Mobilde Gizli) */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 onPrev();
               }}
-              className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="hidden md:flex absolute left-8 md:left-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Previous Image"
             >
               <ChevronLeft className="w-7 h-7" />
@@ -151,18 +170,18 @@ export default function GalleryModal({
                 e.stopPropagation();
                 onNext();
               }}
-              className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="hidden md:flex absolute right-8 md:right-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Next Image"
             >
               <ChevronRight className="w-7 h-7" />
             </button>
 
-            {/* Alt Künye */}
-            <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-12 md:right-12 z-50 flex justify-between items-baseline text-xs md:text-sm tracking-widest uppercase font-light text-white/70 drop-shadow-md">
+            {/* Alt Künye (Mobilde adres çubuğunun üstünde kalması için bottom-20 pb-safe eklendi) */}
+            <div className="absolute bottom-20 md:bottom-10 left-6 right-6 md:left-12 md:right-12 z-40 flex justify-between items-baseline text-xs md:text-sm tracking-widest uppercase font-light text-white/80 drop-shadow-md pointer-events-none">
               <span className="font-light tracking-wider">
                 {currentImage.title}
               </span>
-              <span className="text-white/70">
+              <span className="text-white/80">
                 {currentImage.subtitle}
               </span>
             </div>
