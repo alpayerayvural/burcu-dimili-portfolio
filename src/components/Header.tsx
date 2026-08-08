@@ -16,7 +16,6 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const content = siteContent[lang];
 
-  // Dil Değiştirildiğinde URL'ye lang Parametresini Ekle/Çıkar
   const handleLanguageToggle = () => {
     const nextLang = lang === "TR" ? "EN" : "TR";
     setLang(nextLang);
@@ -51,7 +50,6 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
     }
   };
 
-  // Dinamik Link Oluşturucu (Aktif Dili URL'ye Yansıtır)
   const getTargetHref = (itemId: string) => {
     const isPageLink = itemId === "about" || itemId === "contact";
     const langQuery = lang === "EN" ? "lang=EN" : "";
@@ -69,8 +67,8 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 bg-[#F4F3EF]/90 backdrop-blur-md border-b border-neutral-300/60 transition-all">
-      <div className="max-w-7xl mx-auto px-6 py-3 md:py-4 md:px-12 flex justify-between items-center">
-        {/* Brand / Logo */}
+      <div className="max-w-7xl mx-auto px-6 py-3.5 md:py-4 md:px-12 flex justify-between items-center">
+        {/* Brand / Logo (Doğal Genişlik, Tok Siyah Kontrast) */}
         <Link 
           href={getTargetHref("home")}
           onClick={() => {
@@ -85,10 +83,11 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
           }}
           className="group"
         >
-          <h1 className="font-serif text-2xl md:text-3xl tracking-wider text-[#1A1A1A] group-hover:opacity-75 transition-opacity">
+          {/* tracking-wider ile harf arası sıklaştırıldı, text-black ve font-medium ile belirginleştirildi */}
+          <h1 className="font-serif text-2xl md:text-3xl font-medium tracking-wider text-black group-hover:opacity-75 transition-opacity leading-none">
             BURCU DİMİLİ
           </h1>
-          <p className="text-[10px] md:text-xs tracking-[0.2em] text-neutral-500 uppercase mt-0.5">
+          <p className="text-[10px] md:text-xs tracking-[0.2em] text-neutral-600 font-medium uppercase mt-1">
             PR & COMMUNICATIONS
           </p>
         </Link>
@@ -115,7 +114,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
             );
           })}
 
-          {/* Language Switcher (Masaüstü) */}
+          {/* Language Switcher */}
           <button
             onClick={handleLanguageToggle}
             className="flex items-center space-x-1.5 px-3 py-1 border border-neutral-400 rounded-full hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-all text-[11px] font-semibold tracking-wider ml-4 cursor-pointer"
@@ -127,7 +126,6 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
 
         {/* Mobile Navigation Button */}
         <div className="flex items-center space-x-4 lg:hidden">
-          {/* Language Switcher (Mobil) */}
           <button
             onClick={handleLanguageToggle}
             className="flex items-center space-x-1 px-2.5 py-1 border border-neutral-400 rounded-full text-[10px] font-semibold tracking-wider"

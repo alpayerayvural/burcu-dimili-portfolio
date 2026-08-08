@@ -65,14 +65,14 @@ function MainContent() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
                 >
-                  {/* TAB 1: HERO */}
+                  {/* TAB 1: HERO (text-justify kaldırıldı, doğal sola hizalı) */}
                   {activeTab === "home" && (
                     <div className="space-y-8 pt-4">
                       <div className="w-12 h-[1px] bg-neutral-800"></div>
-                      <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.15] text-justify">
+                      <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-[#1A1A1A] leading-[1.15]">
                         {content.hero.title}
                       </h2>
-                      <p className="text-sm md:text-base text-neutral-600 max-w-xl font-normal leading-relaxed text-justify">
+                      <p className="text-sm md:text-base text-neutral-600 max-w-xl font-normal leading-relaxed">
                         {content.hero.description}
                       </p>
                     </div>
@@ -136,7 +136,7 @@ function MainContent() {
                       </div>
 
                       <div className="space-y-6 pt-6 border-t border-neutral-300/70">
-                        <h2 className="font-serif text-xl md:text-2xl text-[#1A1A1A]">
+                        <h2 className="font-serif text-2xl md:text-3xl text-[#1A1A1A]">
                           {content.collaborations.selectedTitle}
                         </h2>
                         <div className="bg-[#E8E4DF]/60 p-6 border border-neutral-300/60">

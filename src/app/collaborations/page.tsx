@@ -57,7 +57,8 @@ export default function CollaborationsPage() {
 
               <div className="space-y-6 pt-6 border-t border-neutral-300/70">
                 <div className="space-y-3">
-                  <h2 className="font-serif text-2xl md:text-3xl text-[#1A1A1A]">
+                  {/* Başlık Boyutu Eşitlendi: text-3xl md:text-4xl */}
+                  <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A]">
                     {content.selectedTitle}
                   </h2>
                   <p className="text-sm md:text-base text-neutral-600 font-light italic border-l border-neutral-800 pl-4 py-0.5">
