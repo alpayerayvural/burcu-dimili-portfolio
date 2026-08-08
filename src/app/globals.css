@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    font-family: var(--font-sans), sans-serif;
+  }
+  
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-serif), serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Yumuşak kaydırma ve temiz geçişler */
+html {
+  scroll-behavior: smooth;
+}
+
+/* İnce ve şık kaydırma çubuğu */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F3EF;
+}
+::-webkit-scrollbar-thumb {
+  background: #CCCCCC;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #999999;
+}
+/* Sonsuz Kayan Logo Animasyonları (Safari & Mobile Compatible) */
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left linear infinite;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.animate-marquee-right {
+  animation: marquee-right linear infinite;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+/* Sonsuz Kayan Logo Animasyonları */
+@keyframes marquee-left {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left linear infinite;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.animate-marquee-right {
+  animation: marquee-right linear infinite;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Sadece Üstüne Gelinen Bandı Durduran Kurşun Geçirmez CSS */
+.marquee-row:hover .animate-marquee-left,
+.marquee-row:hover .animate-marquee-right {
+  animation-play-state: paused !important;
 }

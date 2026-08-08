@@ -1,0 +1,18 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+export default function Template({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, filter: "blur(4px)" }}
+      animate={{ opacity: 1, filter: "blur(0px)" }}
+      transition={{
+        duration: 1.2, // Tam 1.2 saniyelik ağır ve sinematik geçiş
+        ease: [0.4, 0.0, 0.2, 1], // Yavaş başlayıp ağırlaşan süzülme eğrisi
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
