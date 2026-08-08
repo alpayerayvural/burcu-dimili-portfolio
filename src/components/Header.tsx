@@ -68,7 +68,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 bg-[#F4F3EF]/90 backdrop-blur-md border-b border-neutral-300/60 transition-all">
       <div className="max-w-7xl mx-auto px-6 py-3.5 md:py-4 md:px-12 flex justify-between items-center">
-        {/* Brand / Logo (Doğal Genişlik, Tok Siyah Kontrast) */}
+        {/* Brand / Logo (Tam Ortalanmış Alt Başlık) */}
         <Link 
           href={getTargetHref("home")}
           onClick={() => {
@@ -81,13 +81,12 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
               }
             }
           }}
-          className="group"
+          className="group flex flex-col items-center text-center"
         >
-          {/* tracking-wider ile harf arası sıklaştırıldı, text-black ve font-medium ile belirginleştirildi */}
           <h1 className="font-serif text-2xl md:text-3xl font-medium tracking-wider text-black group-hover:opacity-75 transition-opacity leading-none">
             BURCU DİMİLİ
           </h1>
-          <p className="text-[10px] md:text-xs tracking-[0.2em] text-neutral-600 font-medium uppercase mt-1">
+          <p className="text-[10px] md:text-xs tracking-[0.2em] text-neutral-600 font-medium uppercase mt-1 text-center">
             PR & COMMUNICATIONS
           </p>
         </Link>

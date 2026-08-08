@@ -35,7 +35,7 @@ export const siteContent = {
       title: "Hakkında",
       p1: "2012 yılında İstanbul Üniversitesi Sosyoloji Bölümü’nden mezun oldu. Kariyerine çeşitli reklam ajanslarında başladı. Ardından Artful Living’de editör olarak görev aldı ve daha sonra derginin genel yayın yönetmenliğini üstlendi. Yedi buçuk yıllık Artful Living deneyiminin ardından editoryal çalışmalar ile basın ve halkla ilişkiler alanlarında bağımsız olarak çalışmaya başladı.",
       p2: "2020 yılından bu yana bağımsız iletişim danışmanı, editör ve yazar olarak çalışmalarını sürdürüyor. 2024 yılında Yeditepe Üniversitesi Sanat ve Kültür Yönetimi Bölümü’nde Sanat ve Kültür Yönetiminde Basın ve Halkla İlişkiler dersini verdi.",
-      p3: "Hâlen Global Design Forum Istanbul, Bor Sanat, Hara, YUNT, Decollage Art Space, İMALAT-HANE, Shiva Zahed Gallery ile basın ve halkla ilişkiler alanında düzenli olarak çalışıyor. Bugüne kadar Hitay Vakfı, Vuslat Doğan Sabancı, Baksı Müzesi, Terakki Vakfı Sanat Galerisi, Merdiven Art Space, Melek Zeynep Bulut, Galeri Bu, Bursa Büyükşehir Belediyesi, Studio Barbare, Cem Mumcu, Perasma, Nilüfer Belediyesi, Bayetav, Bilge Alkor, Serina Haratoka, Alican Leblebici, Eda Soylu, Bihter Yasemin Adalı ve Melis Buyruk ile proje bazlı iş birlikleri gerçekleştirdi.",
+      p3: "Hâlen Global Design Forum Istanbul, Bor Sanat, Hara, YUNT, Decollage Art Space, İMALAT-HANE, Shiva Zahed Gallery ile basın ve halkla ilişkiler alanında düzenli olarak çalışıyor. Bugüne kadar Hitay Vakfı, Vuslat, Baksı Müzesi, Terakki Vakfı Sanat Galerisi, Merdiven Art Space, Melek Zeynep Bulut, Galeri Bu, Bursa Büyükşehir Belediyesi, Studio Barbare, Cem Mumcu, Perasma, Nilüfer Belediyesi, Bayetav, Bilge Alkor, Serina Haratoka, Alican Leblebici, Eda Soylu, Bihter Yasemin Adalı ve Melis Buyruk ile proje bazlı iş birlikleri gerçekleştirdi.",
       p4: "Aposto, Artful Living, Oggusto ve The Magger başta olmak üzere çeşitli yayınlarda yazılarını yayımlamaya devam ediyor.",
     },
     approach: {
@@ -305,7 +305,7 @@ export const siteContent = {
       title: "About",
       p1: "She graduated from the Department of Sociology at Istanbul University in 2012. She began her career at various advertising agencies before joining Artful Living as an editor, later serving as the magazine’s Editor-in-Chief. After seven and a half years at Artful Living, she began working independently in editorial services, public relations, and press communications.",
       p2: "Since 2020, she has been working as an independent communications consultant, editor, and writer. In 2024, she taught the course Press and Public Relations in Arts and Cultural Management at the Department of Arts and Cultural Management at Yeditepe University.",
-      p3: "She currently collaborates with Global Design Forum Istanbul, Bor Sanat, Hara, YUNT, Decollage Art Space, İMALAT-HANE, and Shiva Zahed Gallery on an ongoing basis, specializing in public relations and press communications. Throughout her career, she has also worked on a project basis with Hitay Foundation, Vuslat Doğan Sabancı, Baksı Museum, Terakki Foundation Art Gallery, Merdiven Art Space, Melek Zeynep Bulut, Galeri Bu, Bursa Metropolitan Municipality, Studio Barbare, Cem Mumcu, Perasma, Nilüfer Municipality, Bayetav, Bilge Alkor, Serina Haratoka, Alican Leblebici, Eda Soylu, Bihter Yasemin Adalı, and Melis Buyruk.",
+      p3: "She currently collaborates with Global Design Forum Istanbul, Bor Sanat, Hara, YUNT, Decollage Art Space, İMALAT-HANE, and Shiva Zahed Gallery on an ongoing basis, specializing in public relations and press communications. Throughout her career, she has also worked on a project basis with Hitay Foundation, Vuslat, Baksı Museum, Terakki Foundation Art Gallery, Merdiven Art Space, Melek Zeynep Bulut, Galeri Bu, Bursa Metropolitan Municipality, Studio Barbare, Cem Mumcu, Perasma, Nilüfer Municipality, Bayetav, Bilge Alkor, Serina Haratoka, Alican Leblebici, Eda Soylu, Bihter Yasemin Adalı, and Melis Buyruk.",
       p4: "She continues to contribute to a range of publications, including Aposto, Artful Living, OGGUSTO, and The Magger.",
     },
     approach: {
@@ -367,7 +367,7 @@ export const siteContent = {
       selectedTitle: "Selected Collaborations",
       selectedDesc: "A selection of projects developed over the years with artists, institutions, galleries and brands.",
       selectedList: [
-        "Vuslat Doğan Sabancı",
+        "Vuslat",
         "Bor Sanat",
         "Baksı Museum",
         "Autoban",
