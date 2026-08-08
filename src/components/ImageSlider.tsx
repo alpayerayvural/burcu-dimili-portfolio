@@ -22,7 +22,7 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
     setCurrentIndex(0);
   }, [activeTab]);
 
-  // 5 Saniyelik otomatik akış (Manuel geçişte currentIndex değişince sayaç baştan sıfırlanır)
+  // 5 Saniyelik otomatik akış
   useEffect(() => {
     if (isPaused) return;
 
@@ -43,7 +43,6 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };
 
-  // Android ve iOS Dokunmatik Kaydırma (Velocity + Offset Desteği)
   const handleDragEnd = (_: any, info: PanInfo) => {
     const swipeThreshold = 30;
     const velocityThreshold = 200;
@@ -56,7 +55,8 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
   };
 
   return (
-    <div className="flex flex-col group sticky top-28 select-none">
+    /* lg:pt-[34px] eklenerek fotoğrafın üst kenarı soldaki çizgiyle milimetrik hizalandı */
+    <div className="flex flex-col group sticky top-28 select-none lg:pt-[35px]">
       <div
         onClick={() => onImageClick && onImageClick(currentIndex)}
         onMouseEnter={() => setIsPaused(true)}
@@ -80,7 +80,7 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
           />
         </AnimatePresence>
 
-        {/* Masaüstü Okları (Masaüstünde hover olunca görünür) */}
+        {/* Masaüstü Okları */}
         <div className="absolute inset-0 hidden md:flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
           <button
             onClick={handlePrev}

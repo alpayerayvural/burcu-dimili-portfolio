@@ -21,7 +21,6 @@ function MainContent() {
 
   const content = siteContent[lang];
 
-  // URL'den hem Sekmeyi (tab) hem Dili (lang) okur
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam) {
@@ -65,9 +64,9 @@ function MainContent() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
                 >
-                  {/* TAB 1: HERO (Çizgi kaldırıldı, punto 3 satıra düşürüldü, sağ resimle sıfırlandı) */}
+                  {/* TAB 1: HERO */}
                   {activeTab === "home" && (
-                    <div className="space-y-6 pt-20">
+                    <div className="space-y-6 pt-26">
                       <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] tracking-tight text-[#1A1A1A] leading-[1.2]">
                         {content.hero.title}
                       </h2>
