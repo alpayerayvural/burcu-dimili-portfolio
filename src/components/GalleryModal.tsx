@@ -36,7 +36,7 @@ export default function GalleryModal({
     setMounted(true);
   }, []);
 
-  // Görsellerin Arka Planda Akıllıca İndirilmesi (Preload Mechanism)
+  // Preload Mekanizması
   useEffect(() => {
     if (!isOpen || !images || images.length === 0) return;
 
@@ -54,19 +54,44 @@ export default function GalleryModal({
     }
   }, [currentIndex, isOpen, images]);
 
-  // Arka plan scroll kilitleme
+  // Arka Plan Scroll Kilitleme ve Gerçek Native Fullscreen API
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+
+      // Mobilde Gerçek Tam Ekran (Tarayıcı ve Telefon Bilgilerini Gizler)
+      const docEl = document.documentElement as any;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(() => {});
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen().catch(() => {});
+      }
     } else {
       document.body.style.overflow = "unset";
+
+      // Tam Ekrardan Çıkış
+      const doc = document as any;
+      if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+        if (doc.exitFullscreen) {
+          doc.exitFullscreen().catch(() => {});
+        } else if (doc.webkitExitFullscreen) {
+          doc.webkitExitFullscreen().catch(() => {});
+        }
+      }
     }
+
     return () => {
       document.body.style.overflow = "unset";
+      const doc = document as any;
+      if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+        if (doc.exitFullscreen) {
+          doc.exitFullscreen().catch(() => {});
+        }
+      }
     };
   }, [isOpen]);
 
-  // 5 Saniyelik Otomatik Akış (Manual geçişlerde currentIndex değişince sayaç baştan sıfırlanır)
+  // 5 Saniyelik Otomatik Akış
   useEffect(() => {
     if (!isOpen || isPaused) return;
     const timer = setInterval(() => {
@@ -75,7 +100,7 @@ export default function GalleryModal({
     return () => clearInterval(timer);
   }, [isOpen, isPaused, currentIndex, onNext]);
 
-  // ESC ve Ok Tuşları Kontrolü
+  // Klavye Kontrolleri
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -99,8 +124,7 @@ export default function GalleryModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          /* 100dvh ile mobil adres çubuğu taşmaları tamamen engellendi */
-          className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-black select-none"
+          className="fixed inset-0 z-[9999] w-screen h-[100dvh] overflow-hidden bg-black select-none flex flex-col justify-between items-center"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -108,9 +132,9 @@ export default function GalleryModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
-            className="w-full h-full relative flex items-center justify-center p-4 md:p-12"
+            className="w-full h-full relative flex items-center justify-center p-2 sm:p-4 md:p-10 pb-16 landscape:pb-10"
           >
-            {/* Fotoğraf (Kadraj kesilmesin diye her ekranda ve yatay modda object-contain) */}
+            {/* Fotoğraf (Yan modda yüksekliği dikey alana göre dinamik ayarlar) */}
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentIndex}
@@ -120,12 +144,12 @@ export default function GalleryModal({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="max-w-full max-h-full object-contain pointer-events-none"
+                className="max-w-full max-h-[calc(100dvh-80px)] landscape:max-h-[calc(100dvh-45px)] object-contain pointer-events-none"
               />
             </AnimatePresence>
 
-            {/* MOBİL İÇİN GÖRÜNMEZ SAĞ/SOL DOKUNMATİK ALANLAR (Tap Zones) */}
-            <div className="absolute inset-0 z-30 flex md:hidden pointer-events-auto">
+            {/* MOBİL İÇİN GÖRÜNMEZ DOKUNMATİK SAĞ/SOL ALANLAR */}
+            <div className="absolute inset-0 z-30 flex lg:hidden pointer-events-auto">
               <div
                 onClick={(e) => {
                   e.stopPropagation();
@@ -144,22 +168,22 @@ export default function GalleryModal({
               />
             </div>
 
-            {/* Sağ Üst Kapat Butonu */}
+            {/* Kapat Butonu */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 md:top-10 md:right-10 z-50 p-3 rounded-full bg-black/40 hover:bg-black/70 text-white/90 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-10 md:right-10 z-50 p-2.5 sm:p-3 rounded-full bg-black/50 hover:bg-black/80 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Close Modal"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            {/* MASAÜSTÜ İÇİN YÜZEN OKLAR (Mobilde Gizli) */}
+            {/* MASAÜSTÜ İÇİN YÜZEN OKLAR (Mobil & Yan Modda Gizli) */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 onPrev();
               }}
-              className="hidden md:flex absolute left-8 md:left-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="hidden lg:flex absolute left-8 lg:left-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Previous Image"
             >
               <ChevronLeft className="w-7 h-7" />
@@ -170,18 +194,18 @@ export default function GalleryModal({
                 e.stopPropagation();
                 onNext();
               }}
-              className="hidden md:flex absolute right-8 md:right-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 hover:text-white backdrop-blur-md transition-all cursor-pointer border border-white/10"
+              className="hidden lg:flex absolute right-8 lg:right-12 top-1/2 -translate-y-1/2 z-50 p-4 rounded-full bg-black/40 hover:bg-black/70 text-white/90 backdrop-blur-md transition-all cursor-pointer border border-white/10"
               aria-label="Next Image"
             >
               <ChevronRight className="w-7 h-7" />
             </button>
 
-            {/* Alt Künye (Mobilde adres çubuğunun üstünde kalması için bottom-20 pb-safe eklendi) */}
-            <div className="absolute bottom-20 md:bottom-10 left-6 right-6 md:left-12 md:right-12 z-40 flex justify-between items-baseline text-xs md:text-sm tracking-widest uppercase font-light text-white/80 drop-shadow-md pointer-events-none">
-              <span className="font-light tracking-wider">
+            {/* Alt Künye (Yan modda en alta oturur ve uzun isimleri truncate eder) */}
+            <div className="absolute bottom-4 sm:bottom-6 md:bottom-10 landscape:bottom-2 left-4 right-4 sm:left-6 sm:right-6 md:left-12 md:right-12 z-40 flex justify-between items-baseline text-[10px] sm:text-xs md:text-sm tracking-widest uppercase font-light text-white/80 drop-shadow-md pointer-events-none">
+              <span className="font-light tracking-wider truncate pr-2">
                 {currentImage.title}
               </span>
-              <span className="text-white/80">
+              <span className="text-white/80 truncate pl-2">
                 {currentImage.subtitle}
               </span>
             </div>
