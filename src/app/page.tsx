@@ -52,7 +52,7 @@ function MainContent() {
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <main className="max-w-7xl mx-auto px-6 md:px-12 py-4 md:py-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             
             {/* SOL TARAF: Değişen İçerik */}
             <div className="lg:col-span-7">

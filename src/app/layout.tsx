@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={`${cormorant.variable} ${inter.variable}`}>
-      <body className="font-sans bg-[#F4F3EF] text-[#1A1A1A] antialiased selection:bg-[#1A1A1A] selection:text-[#F4F3EF]">
+    <html lang="tr" className={`${cormorant.variable} ${inter.variable} overscroll-y-none`}>
+      <body className="font-sans bg-[#F4F3EF] text-[#1A1A1A] antialiased selection:bg-[#1A1A1A] selection:text-[#F4F3EF] overscroll-y-contain">
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
