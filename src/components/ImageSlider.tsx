@@ -55,8 +55,8 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
   };
 
   return (
-    /* lg:pt-[34px] eklenerek fotoğrafın üst kenarı soldaki çizgiyle milimetrik hizalandı */
-    <div className="flex flex-col group sticky top-28 select-none lg:pt-[35px]">
+    /* lg:pt-[35px] çizgi hizası korundu. Çerçeve tamamen kaldırıldı. */
+    <div className="flex flex-col group/slider sticky top-28 select-none lg:pt-[35px]">
       <div
         onClick={() => onImageClick && onImageClick(currentIndex)}
         onMouseEnter={() => setIsPaused(true)}
@@ -75,30 +75,32 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full object-cover touch-pan-y"
+            transition={{ duration: 0.45, ease: "easeInOut" }}
+            /* LENS FOCUS: Hover olunca %1.5 yavaş ve pürüzsüz büyüme */
+            className="absolute inset-0 w-full h-full object-cover touch-pan-y group-hover/slider:scale-[1.015] transition-transform duration-700 ease-out"
           />
         </AnimatePresence>
 
-        {/* Masaüstü Okları */}
-        <div className="absolute inset-0 hidden md:flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        {/* MİNİMALİST ZARİF OKLAR */}
+        <div className="absolute inset-0 hidden md:flex items-center justify-between p-4 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 pointer-events-none">
           <button
             onClick={handlePrev}
-            className="w-9 h-9 rounded-full bg-black/30 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/60 transition-all pointer-events-auto cursor-pointer"
+            className="w-8 h-8 rounded-full bg-black/20 hover:bg-black/60 text-white/90 hover:text-white backdrop-blur-sm flex items-center justify-center transition-all pointer-events-auto cursor-pointer border border-white/10"
             aria-label="Previous Image"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={handleNext}
-            className="w-9 h-9 rounded-full bg-black/30 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/60 transition-all pointer-events-auto cursor-pointer"
+            className="w-8 h-8 rounded-full bg-black/20 hover:bg-black/60 text-white/90 hover:text-white backdrop-blur-sm flex items-center justify-center transition-all pointer-events-auto cursor-pointer border border-white/10"
             aria-label="Next Image"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
+      {/* Alt Künye */}
       <div className="mt-3 flex justify-between items-baseline text-[11px] tracking-wider uppercase text-neutral-500 font-light">
         <span className="text-neutral-500 font-light">
           {images[currentIndex].title}
