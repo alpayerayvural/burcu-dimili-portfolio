@@ -92,7 +92,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-8 text-xs tracking-widest uppercase text-neutral-700 font-medium">
+        <nav className="hidden lg:flex items-center space-x-8 text-xs tracking-widest uppercase text-neutral-700 font-medium translate-y-1.5">
           {content.nav.map((item) => {
             const isPageLink = item.id === "about" || item.id === "contact";
             const isActive = activeTab === item.id;

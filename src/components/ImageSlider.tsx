@@ -17,12 +17,10 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Sekme değiştiğinde slider resmini baştan başlat
   useEffect(() => {
     setCurrentIndex(0);
   }, [activeTab]);
 
-  // 5 Saniyelik otomatik akış
   useEffect(() => {
     if (isPaused) return;
 
@@ -55,13 +53,13 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
   };
 
   return (
-    /* lg:pt-[35px] çizgi hizası korundu. Çerçeve tamamen kaldırıldı. */
-    <div className="flex flex-col group/slider sticky top-28 select-none lg:pt-[35px]">
+    <div className="flex flex-col group/slider sticky top-28 select-none lg:pt-[28px]">
+      {/* max-h-[380px] eklendi: Küçük/dar laptop ekranlarında resim taşıp alttaki logoları kesmesin */}
       <div
         onClick={() => onImageClick && onImageClick(currentIndex)}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="relative aspect-[4/3] sm:aspect-[5/4] w-full bg-neutral-200 overflow-hidden shadow-sm cursor-pointer touch-pan-y"
+        className="relative aspect-[4/3] sm:aspect-[5/4] lg:max-h-[370px] w-full bg-neutral-200 overflow-hidden shadow-sm cursor-pointer touch-pan-y"
       >
         <AnimatePresence initial={false}>
           <motion.img
@@ -76,7 +74,6 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45, ease: "easeInOut" }}
-            /* LENS FOCUS: Hover olunca %1.5 yavaş ve pürüzsüz büyüme */
             className="absolute inset-0 w-full h-full object-cover touch-pan-y group-hover/slider:scale-[1.015] transition-transform duration-700 ease-out"
           />
         </AnimatePresence>
@@ -101,7 +98,7 @@ export default function ImageSlider({ activeTab = "home", onImageClick }: ImageS
       </div>
 
       {/* Alt Künye */}
-      <div className="mt-3 flex justify-between items-baseline text-[11px] tracking-wider uppercase text-neutral-500 font-light">
+      <div className="mt-2 flex justify-between items-baseline text-[11px] tracking-wider uppercase text-neutral-500 font-light">
         <span className="text-neutral-500 font-light">
           {images[currentIndex].title}
         </span>

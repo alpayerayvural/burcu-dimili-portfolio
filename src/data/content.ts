@@ -186,7 +186,7 @@ export const siteContent = {
           url: "https://vogue.com.tr/sanat/shiva-zahed-istanbul-iran-cagdas-sanatini-tanitmak-adina-ideal-bir-sehir",
         },
         {
-          client: "Studio Barbare",
+          client: "STUDIO BARBARE",
           title: "“Bağevi’ne Gizlenen Eserler”",
           publication: "Artful Living",
           url: "https://www.artfulliving.com.tr/sanat/bagevine-gizlenen-eserler-i-35041",
@@ -237,7 +237,7 @@ export const siteContent = {
           url: "https://www.basedistanbul.com/mekanin-hafizasini-belgelemek-mumkun-mu?utm_source=chatgpt.com",
         },
         {
-          publication: "Unlimited",
+          publication: "UNLIMITED",
           title: "“Sürdürülebilir sanata ve üretime dair: Açık Atölye”",
           url: "https://www.unlimitedrag.com/post/sürdürülebilir-sanata-ve-üretime-dair-açık-atölye",
         },
@@ -252,7 +252,7 @@ export const siteContent = {
           url: "https://aposto.com/s/derinlikte-sakli-olan-uzerine-arkhe-karanlik",
         },
         {
-          publication: "Artful Living",
+          publication: "ARTFUL LIVING",
           title: "“Travmatik ve Bir O Kadar Haz Dolu Bir Eşik: ‘Haz ile Göklenir Dünya’”",
           url: "https://www.artfulliving.com.tr/sanat/travmatik-ve-bir-o-kadar-haz-dolu-bir-esik-haz-ile-goklenir-dunya-i-34399",
         },

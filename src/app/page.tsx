@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageSlider from "@/components/ImageSlider";
@@ -51,8 +52,9 @@ function MainContent() {
       <div>
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <main className="max-w-7xl mx-auto px-6 md:px-12 py-4 md:py-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        {/* py-2 md:py-3 ile dikey alan optimize edildi */}
+        <main className="max-w-7xl mx-auto px-6 md:px-12 py-2 md:py-3">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             
             {/* SOL TARAF: Değişen İçerik */}
             <div className="lg:col-span-7">
@@ -66,11 +68,11 @@ function MainContent() {
                 >
                   {/* TAB 1: HERO */}
                   {activeTab === "home" && (
-                    <div className="space-y-6 pt-26">
-                      <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] tracking-tight text-[#1A1A1A] leading-[1.2]">
+                    <div className="space-y-6 pt-28">
+                      <h2 className="font-serif text-2xl sm:text-3xl md:text-3xl lg:text-[2.6rem] tracking-tight text-[#1A1A1A] leading-[1.2]">
                         {content.hero.title}
                       </h2>
-                      <p className="text-sm md:text-base text-neutral-600 max-w-xl font-normal leading-relaxed">
+                      <p className="text-xs sm:text-sm md:text-base text-neutral-600 max-w-xl font-normal leading-relaxed">
                         {content.hero.description}
                       </p>
                     </div>
@@ -79,8 +81,8 @@ function MainContent() {
                   {/* TAB 2: YAKLAŞIM */}
                   {activeTab === "approach" && (
                     <div className="space-y-10">
-                      <div className="border-b border-neutral-300/60 pb-3">
-                        <span className="text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
+                      <div className="border-b border-neutral-300/60 pb-5">
+                        <span className="inline-block translate-y-2 text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
                           {content.approach.title}
                         </span>
                       </div>
@@ -112,8 +114,8 @@ function MainContent() {
                   {/* TAB 3: İŞ BİRLİKLERİ */}
                   {activeTab === "collaborations" && (
                     <div className="space-y-12">
-                      <div className="border-b border-neutral-300/60 pb-3">
-                        <span className="text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
+                      <div className="border-b border-neutral-300/60 pb-5">
+                        <span className="inline-block translate-y-2 text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
                           {content.collaborations.title}
                         </span>
                       </div>
@@ -134,7 +136,7 @@ function MainContent() {
                       </div>
 
                       <div className="space-y-6 pt-6 border-t border-neutral-300/70">
-                        <h2 className="font-serif text-2xl md:text-3xl text-[#1A1A1A]">
+                        <h2 className="font-serif text-3xl md:text-3xl text-[#1A1A1A]">
                           {content.collaborations.selectedTitle}
                         </h2>
                         <div className="bg-[#E8E4DF]/60 p-6 border border-neutral-300/60">
@@ -156,8 +158,8 @@ function MainContent() {
                   {/* TAB 4: BASIN */}
                   {activeTab === "press" && (
                     <div className="space-y-6">
-                      <div className="border-b border-neutral-300/60 pb-3">
-                        <span className="text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
+                      <div className="border-b border-neutral-300/60 pb-5">
+                        <span className="inline-block translate-y-2 text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
                           {content.press.title}
                         </span>
                       </div>
@@ -180,8 +182,9 @@ function MainContent() {
                               <h3 className="font-serif text-base text-[#1A1A1A] group-hover:italic transition-all">
                                 {item.title}
                               </h3>
-                              <span className="text-xs uppercase font-medium text-neutral-700 ml-3 shrink-0">
-                                {item.publication} ↗
+                              <span className="text-xs uppercase font-medium text-neutral-700 ml-3 shrink-0 inline-flex items-center space-x-1">
+                                <span>{item.publication}</span>
+                                <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity" />
                               </span>
                             </div>
                           </a>
@@ -193,8 +196,8 @@ function MainContent() {
                   {/* TAB 5: EDİTORYAL */}
                   {activeTab === "editorial" && (
                     <div className="space-y-6">
-                      <div className="border-b border-neutral-300/60 pb-3">
-                        <span className="text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
+                      <div className="border-b border-neutral-300/60 pb-5">
+                        <span className="inline-block translate-y-2 text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
                           {content.editorial.title}
                         </span>
                       </div>
@@ -217,8 +220,8 @@ function MainContent() {
                               <h3 className="font-serif text-base text-[#1A1A1A] group-hover:italic transition-all">
                                 {item.title}
                               </h3>
-                              <span className="text-xs font-mono text-neutral-400 group-hover:text-black ml-3">
-                                ↗
+                              <span className="text-xs font-mono text-neutral-400 group-hover:text-black ml-3 shrink-0 inline-flex items-center">
+                                <ArrowUpRight className="w-3.5 h-3.5" />
                               </span>
                             </div>
                           </a>
@@ -237,9 +240,9 @@ function MainContent() {
 
           </div>
 
-          {/* Sadece Ana Sekmedeyken Çalışılan Kurumlar Bandı */}
+          {/* Sadece Ana Sekmedeyken Çalışılan Kurumlar Bandı (Margin düşürüldü) */}
           {activeTab === "home" && (
-            <div className="mt-16">
+            <div className="mt-5 lg:mt-6">
               <TrustedBy lang={lang} />
             </div>
           )}
