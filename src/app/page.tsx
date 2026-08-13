@@ -22,6 +22,11 @@ function MainContent() {
 
   const content = siteContent[lang];
 
+  // Sekme değiştiğinde sayfayı otomatik olarak en üste kaydırır (UX Fix)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeTab]);
+
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam) {
@@ -110,7 +115,7 @@ function MainContent() {
                     </div>
                   )}
 
-                  {/* TAB 3: MÜŞTERİLER (ÇERÇEVESİZ, NEFES ALAN GALERİ DÜZENİ) */}
+                  {/* TAB 3: MÜŞTERİLER */}
                   {(activeTab === "collaborations" || activeTab === "clients") && (
                     <div className="space-y-12">
                       <div className="border-b border-neutral-300/60 pb-5">
@@ -128,20 +133,21 @@ function MainContent() {
                           {content.collaborations.ongoingDesc}
                         </p>
                         
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 sm:gap-x-12 gap-y-8 sm:gap-y-10 items-center pt-2">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 sm:gap-x-8 gap-y-8 sm:gap-y-10 items-center pt-2 -ml-3 sm:-ml-4">
                           {(content.collaborations.ongoingList as ClientItem[]).map((item, index) => (
                             <div
                               key={index}
-                              className="flex items-center justify-center p-2 h-16 sm:h-20 transition-all duration-300"
+                              className="flex items-center justify-center p-2 h-20 sm:h-24 transition-all duration-300"
                             >
                               {item.logo ? (
                                 <img
                                   src={item.logo}
                                   alt={item.name}
-                                  className="max-h-10 sm:max-h-12 max-w-[85%] object-contain filter grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
+                                  className="max-h-14 sm:max-h-16 lg:max-h-20 w-auto max-w-[95%] object-contain filter grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
                                 />
                               ) : (
-                                <span className="font-serif font-medium text-xs sm:text-sm text-[#1A1A1A] text-center leading-snug tracking-wide">
+                                /* Logosuz isimler text-base sm:text-lg seviyesine büyütüldü */
+                                <span className="font-serif font-bold text-base sm:text-lg text-[#1A1A1A] text-center leading-snug tracking-wide opacity-95">
                                   {item.name}
                                 </span>
                               )}
@@ -151,7 +157,7 @@ function MainContent() {
                       </div>
 
                       {/* SEÇİLİ ÇALIŞMALAR */}
-                      <div className="space-y-6 pt-8 border-t border-neutral-300/70">
+                      <div className="space-y-6 pt-10 border-t border-neutral-300/70">
                         <h2 className="font-serif text-3xl md:text-3xl text-[#1A1A1A]">
                           {content.collaborations.selectedTitle}
                         </h2>
@@ -159,20 +165,21 @@ function MainContent() {
                           {content.collaborations.selectedDesc}
                         </p>
 
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 sm:gap-x-12 gap-y-8 sm:gap-y-10 items-center pt-2">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 sm:gap-x-8 gap-y-8 sm:gap-y-10 items-center pt-2 -ml-3 sm:-ml-4">
                           {(content.collaborations.selectedList as ClientItem[]).map((item, index) => (
                             <div
                               key={index}
-                              className="flex items-center justify-center p-2 h-16 sm:h-20 transition-all duration-300"
+                              className="flex items-center justify-center p-2 h-20 sm:h-24 transition-all duration-300"
                             >
                               {item.logo ? (
                                 <img
                                   src={item.logo}
                                   alt={item.name}
-                                  className="max-h-10 sm:max-h-12 max-w-[85%] object-contain filter grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
+                                  className="max-h-14 sm:max-h-16 lg:max-h-20 w-auto max-w-[95%] object-contain filter grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
                                 />
                               ) : (
-                                <span className="font-serif font-medium text-xs sm:text-sm text-[#1A1A1A] text-center leading-snug tracking-wide">
+                                /* Logosuz isimler text-base sm:text-lg seviyesine büyütüldü */
+                                <span className="font-serif font-bold text-base sm:text-lg text-[#1A1A1A] text-center leading-snug tracking-wide opacity-95">
                                   {item.name}
                                 </span>
                               )}

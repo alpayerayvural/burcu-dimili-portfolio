@@ -37,7 +37,7 @@ export default function CollaborationsPage() {
             {/* SOL TARAF: İçerik */}
             <div className="lg:col-span-7 space-y-16">
               {/* DEVAM EDEN ÇALIŞMALAR */}
-              <div className="space-y-8">
+              <div className="space-y-6">
                 <div className="space-y-3">
                   <h1 className="font-serif text-3xl md:text-4xl text-[#1A1A1A]">
                     {content.ongoingTitle}
@@ -47,20 +47,20 @@ export default function CollaborationsPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 pt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 sm:gap-x-8 gap-y-8 sm:gap-y-10 items-center pt-2 -ml-3 sm:-ml-11">
                   {(content.ongoingList as ClientItem[]).map((item, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-center p-4 h-20 bg-white/40 border border-neutral-300/50 hover:bg-white/80 transition-all rounded-sm"
+                      className="flex items-center justify-center p-2 h-20 sm:h-24 transition-all duration-300"
                     >
                       {item.logo ? (
                         <img
                           src={item.logo}
                           alt={item.name}
-                          className="max-h-10 max-w-[85%] object-contain"
+                          className="max-h-14 sm:max-h-16 lg:max-h-20 w-auto max-w-[95%] object-contain filter grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
                         />
                       ) : (
-                        <span className="font-serif font-bold text-xs sm:text-sm text-[#1A1A1A] text-center leading-snug">
+                        <span className="font-serif font-bold text-sm sm:text-base text-[#1A1A1A] text-center leading-snug tracking-wide opacity-90">
                           {item.name}
                         </span>
                       )}
@@ -70,7 +70,7 @@ export default function CollaborationsPage() {
               </div>
 
               {/* SEÇİLİ ÇALIŞMALAR */}
-              <div className="space-y-6 pt-6 border-t border-neutral-300/70">
+              <div className="space-y-6 pt-10 border-t border-neutral-300/70">
                 <div className="space-y-3">
                   <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A]">
                     {content.selectedTitle}
@@ -80,20 +80,20 @@ export default function CollaborationsPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 pt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 sm:gap-x-8 gap-y-8 sm:gap-y-10 items-center pt-2 -ml-3 sm:-ml-4">
                   {(content.selectedList as ClientItem[]).map((item, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-center p-4 h-20 bg-[#E8E4DF]/50 border border-neutral-300/50 hover:bg-[#E8E4DF]/90 transition-all rounded-sm"
+                      className="flex items-center justify-center p-2 h-20 sm:h-24 transition-all duration-300"
                     >
                       {item.logo ? (
                         <img
                           src={item.logo}
                           alt={item.name}
-                          className="max-h-10 max-w-[85%] object-contain"
+                          className="max-h-14 sm:max-h-16 lg:max-h-20 w-auto max-w-[95%] object-contain filter grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
                         />
                       ) : (
-                        <span className="font-serif font-bold text-xs sm:text-sm text-[#1A1A1A] text-center leading-snug">
+                        <span className="font-serif font-bold text-sm sm:text-base text-[#1A1A1A] text-center leading-snug tracking-wide opacity-90">
                           {item.name}
                         </span>
                       )}
