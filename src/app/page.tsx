@@ -22,11 +22,6 @@ function MainContent() {
 
   const content = siteContent[lang];
 
-  // Sekme değiştiğinde sayfayı otomatik olarak en üste kaydırır (UX Fix)
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [activeTab]);
-
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam) {
@@ -62,13 +57,17 @@ function MainContent() {
             
             {/* SOL TARAF: Değişen İçerik */}
             <div className="lg:col-span-7">
-              <AnimatePresence mode="wait">
+              {/* onExitComplete eklendi: Eski içerik tamamen karardıktan SONRA çaktırmadan en üste kayar */}
+              <AnimatePresence
+                mode="wait"
+                onExitComplete={() => window.scrollTo({ top: 0, behavior: "instant" })}
+              >
                 <motion.div
                   key={activeTab}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] }}
                 >
                   {/* TAB 1: HERO */}
                   {activeTab === "home" && (
@@ -146,7 +145,6 @@ function MainContent() {
                                   className="max-h-14 sm:max-h-16 lg:max-h-20 w-auto max-w-[95%] object-contain filter grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
                                 />
                               ) : (
-                                /* Logosuz isimler text-base sm:text-lg seviyesine büyütüldü */
                                 <span className="font-serif font-bold text-base sm:text-lg text-[#1A1A1A] text-center leading-snug tracking-wide opacity-95">
                                   {item.name}
                                 </span>
@@ -178,7 +176,6 @@ function MainContent() {
                                   className="max-h-14 sm:max-h-16 lg:max-h-20 w-auto max-w-[95%] object-contain filter grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
                                 />
                               ) : (
-                                /* Logosuz isimler text-base sm:text-lg seviyesine büyütüldü */
                                 <span className="font-serif font-bold text-base sm:text-lg text-[#1A1A1A] text-center leading-snug tracking-wide opacity-95">
                                   {item.name}
                                 </span>
