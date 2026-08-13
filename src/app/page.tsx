@@ -10,7 +10,7 @@ import ImageSlider from "@/components/ImageSlider";
 import { pageSliders, allSliderImages } from "@/data/sliders";
 import GalleryModal from "@/components/GalleryModal";
 import TrustedBy from "@/components/TrustedBy";
-import { siteContent } from "@/data/content";
+import { siteContent, ClientItem } from "@/data/content";
 import { useLanguage } from "@/context/LanguageContext";
 
 function MainContent() {
@@ -52,7 +52,6 @@ function MainContent() {
       <div>
         <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* py-2 md:py-3 ile dikey alan optimize edildi */}
         <main className="max-w-7xl mx-auto px-6 md:px-12 py-2 md:py-3">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             
@@ -111,14 +110,16 @@ function MainContent() {
                     </div>
                   )}
 
-                  {/* TAB 3: İŞ BİRLİKLERİ */}
-                  {activeTab === "collaborations" && (
+                  {/* TAB 3: MÜŞTERİLER (ÇERÇEVESİZ, NEFES ALAN GALERİ DÜZENİ) */}
+                  {(activeTab === "collaborations" || activeTab === "clients") && (
                     <div className="space-y-12">
                       <div className="border-b border-neutral-300/60 pb-5">
                         <span className="inline-block translate-y-2 text-[10px] tracking-[0.25em] font-semibold text-neutral-500 uppercase">
                           {content.collaborations.title}
                         </span>
                       </div>
+
+                      {/* DEVAM EDEN ÇALIŞMALAR */}
                       <div className="space-y-6">
                         <h1 className="font-serif text-2xl md:text-3xl text-[#1A1A1A]">
                           {content.collaborations.ongoingTitle}
@@ -126,30 +127,57 @@ function MainContent() {
                         <p className="text-sm text-neutral-600 italic border-l border-neutral-800 pl-4">
                           {content.collaborations.ongoingDesc}
                         </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 pt-2">
-                          {content.collaborations.ongoingList.map((item, index) => (
-                            <div key={index} className="font-serif text-base text-[#1A1A1A] border-b border-neutral-300/40 pb-2">
-                              {item}
+                        
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 sm:gap-x-12 gap-y-8 sm:gap-y-10 items-center pt-2">
+                          {(content.collaborations.ongoingList as ClientItem[]).map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center justify-center p-2 h-16 sm:h-20 transition-all duration-300"
+                            >
+                              {item.logo ? (
+                                <img
+                                  src={item.logo}
+                                  alt={item.name}
+                                  className="max-h-10 sm:max-h-12 max-w-[85%] object-contain filter grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
+                                />
+                              ) : (
+                                <span className="font-serif font-medium text-xs sm:text-sm text-[#1A1A1A] text-center leading-snug tracking-wide">
+                                  {item.name}
+                                </span>
+                              )}
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      <div className="space-y-6 pt-6 border-t border-neutral-300/70">
+                      {/* SEÇİLİ ÇALIŞMALAR */}
+                      <div className="space-y-6 pt-8 border-t border-neutral-300/70">
                         <h2 className="font-serif text-3xl md:text-3xl text-[#1A1A1A]">
                           {content.collaborations.selectedTitle}
                         </h2>
-                        <div className="bg-[#E8E4DF]/60 p-6 border border-neutral-300/60">
-                          <div className="flex flex-wrap gap-y-3 gap-x-2 text-xs md:text-sm text-neutral-800 font-serif leading-relaxed">
-                            {content.collaborations.selectedList.map((item, index) => (
-                              <span key={index} className="inline-flex items-center">
-                                <span className="hover:italic text-neutral-800">{item}</span>
-                                {index < content.collaborations.selectedList.length - 1 && (
-                                  <span className="text-neutral-400 mx-2 font-sans text-xs">/</span>
-                                )}
-                              </span>
-                            ))}
-                          </div>
+                        <p className="text-sm text-neutral-600 italic border-l border-neutral-800 pl-4">
+                          {content.collaborations.selectedDesc}
+                        </p>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 sm:gap-x-12 gap-y-8 sm:gap-y-10 items-center pt-2">
+                          {(content.collaborations.selectedList as ClientItem[]).map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center justify-center p-2 h-16 sm:h-20 transition-all duration-300"
+                            >
+                              {item.logo ? (
+                                <img
+                                  src={item.logo}
+                                  alt={item.name}
+                                  className="max-h-10 sm:max-h-12 max-w-[85%] object-contain filter grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default"
+                                />
+                              ) : (
+                                <span className="font-serif font-medium text-xs sm:text-sm text-[#1A1A1A] text-center leading-snug tracking-wide">
+                                  {item.name}
+                                </span>
+                              )}
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -240,7 +268,7 @@ function MainContent() {
 
           </div>
 
-          {/* Sadece Ana Sekmedeyken Çalışılan Kurumlar Bandı (Margin düşürüldü) */}
+          {/* Sadece Ana Sekmedeyken Çalışılan Kurumlar Bandı */}
           {activeTab === "home" && (
             <div className="mt-5 lg:mt-6">
               <TrustedBy lang={lang} />

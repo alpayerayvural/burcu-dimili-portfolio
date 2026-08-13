@@ -13,7 +13,7 @@ export default function TrustedBy({ lang }: TrustedByProps) {
       {/* 1. Tam Ortalanmış Editoryal Başlık */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-3 text-center">
         <span className="text-[10px] md:text-xs tracking-[0.3em] font-medium text-neutral-500 uppercase inline-block">
-          {lang === "TR" ? "İŞ BİRLİKLERİ" : "COLLABORATIONS"}
+          {lang === "TR" ? "MÜŞTERİLER" : "CLIENTS"}
         </span>
       </div>
 

@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import ImageSlider from "@/components/ImageSlider";
 import { pageSliders } from "@/data/sliders";
 import GalleryModal from "@/components/GalleryModal";
-import { siteContent } from "@/data/content";
+import { siteContent, ClientItem } from "@/data/content";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion } from "framer-motion";
 
@@ -36,6 +36,7 @@ export default function CollaborationsPage() {
           >
             {/* SOL TARAF: İçerik */}
             <div className="lg:col-span-7 space-y-16">
+              {/* DEVAM EDEN ÇALIŞMALAR */}
               <div className="space-y-8">
                 <div className="space-y-3">
                   <h1 className="font-serif text-3xl md:text-4xl text-[#1A1A1A]">
@@ -46,18 +47,31 @@ export default function CollaborationsPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-8 pt-2">
-                  {content.ongoingList.map((item, index) => (
-                    <div key={index} className="font-serif text-base text-[#1A1A1A] font-normal tracking-wide border-b border-neutral-300/40 pb-2">
-                      {item}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 pt-2">
+                  {(content.ongoingList as ClientItem[]).map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-center p-4 h-20 bg-white/40 border border-neutral-300/50 hover:bg-white/80 transition-all rounded-sm"
+                    >
+                      {item.logo ? (
+                        <img
+                          src={item.logo}
+                          alt={item.name}
+                          className="max-h-10 max-w-[85%] object-contain"
+                        />
+                      ) : (
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[#1A1A1A] text-center leading-snug">
+                          {item.name}
+                        </span>
+                      )}
                     </div>
                   ))}
                 </div>
               </div>
 
+              {/* SEÇİLİ ÇALIŞMALAR */}
               <div className="space-y-6 pt-6 border-t border-neutral-300/70">
                 <div className="space-y-3">
-                  {/* Başlık Boyutu Eşitlendi: text-3xl md:text-4xl */}
                   <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A]">
                     {content.selectedTitle}
                   </h2>
@@ -66,21 +80,25 @@ export default function CollaborationsPage() {
                   </p>
                 </div>
 
-                <div className="bg-[#E8E4DF]/60 p-6 md:p-8 border border-neutral-300/60">
-                  <div className="flex flex-wrap gap-y-3 gap-x-2 text-xs md:text-sm text-neutral-800 font-serif leading-relaxed">
-                    {content.selectedList.map((item, index) => (
-                      <span key={index} className="inline-flex items-center">
-                        <span className="hover:italic text-neutral-800 font-normal cursor-default">
-                          {item}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 pt-2">
+                  {(content.selectedList as ClientItem[]).map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-center p-4 h-20 bg-[#E8E4DF]/50 border border-neutral-300/50 hover:bg-[#E8E4DF]/90 transition-all rounded-sm"
+                    >
+                      {item.logo ? (
+                        <img
+                          src={item.logo}
+                          alt={item.name}
+                          className="max-h-10 max-w-[85%] object-contain"
+                        />
+                      ) : (
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[#1A1A1A] text-center leading-snug">
+                          {item.name}
                         </span>
-                        {index < content.selectedList.length - 1 && (
-                          <span className="text-neutral-400 mx-2 font-sans text-xs font-light">
-                            /
-                          </span>
-                        )}
-                      </span>
-                    ))}
-                  </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
