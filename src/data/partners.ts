@@ -51,4 +51,5 @@ export interface PartnerItem {
     { id: "22", name: "Terakki Vakfı Sanat Galerisi", type: "image", logoUrl: "/images/logos/Terakki Vakfı Sanat Galerisi.png" },
     { id: "23", name: "Versus Art Project", type: "image", logoUrl: "/images/logos/Versus Art Project.jpg" },
     { id: "24", name: "YUNT", type: "image", logoUrl: "/images/logos/YUNT.png" },
+    { id: "25", name: "Lenzart space", type: "image", logoUrl: "/images/logos/Lenzart.png" },
   ];
